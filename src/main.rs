@@ -20,7 +20,7 @@ extern crate yansi;
 use cargo_metadata::Error as CargoError;
 use clap::{App, AppSettings, Arg, SubCommand};
 use futures::stream::futures_unordered;
-use futures::{Future, FutureExt, Stream};
+use futures::FutureExt;
 use hubcaps::{Credentials, Error as GithubError, Github};
 use hyper::{Client, Error as HttpError};
 use hyper_tls::HttpsConnector;
