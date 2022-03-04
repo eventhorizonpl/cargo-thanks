@@ -95,7 +95,7 @@ fn run() -> Result<()> {
 
     let http = Client::builder()
         .keep_alive(true)
-        .build::<_, hyper::Body>(HttpsConnector::new(4).unwrap());
+        .build::<_, hyper::Body>(HttpsConnector::new());
 
     let crates = deps.iter().map(|dep| {
         http.get(
