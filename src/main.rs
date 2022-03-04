@@ -20,7 +20,7 @@ extern crate yansi;
 use cargo_metadata::Error as CargoError;
 use clap::{App, AppSettings, Arg, SubCommand};
 use futures::stream::futures_unordered;
-use futures::FutureExt;
+use futures::{FutureExt, TryFutureExt};
 use hubcaps::{Credentials, Error as GithubError, Github};
 use hyper::{Client, Error as HttpError};
 use hyper_tls::HttpsConnector;
@@ -93,7 +93,6 @@ fn run() -> Result<()> {
             });
 
     let http = Client::builder()
-        .keep_alive(true)
         .build::<_, hyper::Body>(HttpsConnector::new());
 
     let crates = deps.iter().map(|dep| {
