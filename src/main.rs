@@ -78,7 +78,6 @@ fn run() -> Result<()> {
         Some(Credentials::Token(
             thanks_matches.value_of("token").unwrap().to_owned(),
         )),
-        &core.handle(),
     );
 
     let metadata = cargo_metadata::MetadataCommand::new().exec()?;
@@ -110,7 +109,7 @@ fn run() -> Result<()> {
                 .concat2()
                 .map_err(Error::from)
                 .and_then(move |body| {
-                    serde_json::from_slice::<Wrapper>(&body)
+                    serde_json::from_slice::<Wrapper>(body)
                         .map(|w| w.krate)
                         .map_err(Error::from)
                 })
