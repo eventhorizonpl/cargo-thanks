@@ -20,7 +20,7 @@ extern crate yansi;
 use cargo_metadata::Error as CargoError;
 use clap::{App, AppSettings, Arg, SubCommand};
 use futures::stream::futures_unordered;
-use futures::{Future, Stream};
+use futures::{Future, FutureExt, Stream};
 use hubcaps::{Credentials, Error as GithubError, Github};
 use hyper::{Client, Error as HttpError};
 use hyper_tls::HttpsConnector;
@@ -131,7 +131,7 @@ fn run() -> Result<()> {
             .for_each(|(krate, path)| {
                 let (owner, repo) = repo_uri(path.clone());
                 debug!("starring {}/{}", owner, repo);
-                github.activity().stars().star(owner, repo).then(
+                github.unwrap().activity().stars().star(owner, repo).then(
                     move |result| match result {
                         Ok(()) => {
                             println!(
